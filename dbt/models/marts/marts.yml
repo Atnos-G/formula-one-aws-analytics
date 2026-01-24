@@ -42,10 +42,11 @@ models:
     description: "Faits résultats (grain: 1 ligne par (season, round, driver_id))."
     tests:
       - dbt_utils.unique_combination_of_columns:
-          combination_of_columns:
-            - season
-            - round
-            - driver_id
+          arguments:
+            combination_of_columns:
+              - season
+              - round
+              - driver_id
 
     columns:
       - name: race_key
@@ -145,14 +146,15 @@ models:
     description: "Analyse : poleman par course (grain: 1 ligne par (season, round))."
     tests:
       - dbt_utils.unique_combination_of_columns:
-        arguments:
-          combination_of_columns:
-            - season
-            - round
+          arguments:
+            combination_of_columns:
+              - season
+              - round
 
     columns:
       - name: race_key
         tests:
+          - not_null
           - relationships:
               arguments:
                 to: ref('dim_races')
@@ -176,6 +178,7 @@ models:
 
       - name: pole_constructor_id
         tests:
+          - not_null
           - relationships:
               arguments:
                 to: ref('dim_constructors')

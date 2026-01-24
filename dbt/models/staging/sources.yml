@@ -38,6 +38,7 @@ sources:
             tests: [not_null]
           - name: load_date
             tests: [not_null]
+
       - name: raw_qualifying_json
         columns:
           - name: season

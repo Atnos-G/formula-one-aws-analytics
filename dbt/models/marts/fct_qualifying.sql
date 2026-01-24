@@ -1,35 +1,21 @@
 {{ config(materialized='table') }}
 
 with base as (
-    select * from {{ ref('stg_qualifying') }}
-),
-
-final as (
     select
-        -- id stable
-        lower(
-          to_hex(
-            md5(
-              to_utf8(
-                cast(season as varchar) || '-' ||
-                cast(round as varchar) || '-' ||
-                driver_id
-              )
-            )
-          )
-        ) as qualifying_id,
+        qualifying_id,
+        cast(season as integer) as season,
+        cast(round as integer) as round,
 
-        season,
-        round,
         race_name,
         race_date,
+
         circuit_id,
         circuit_name,
         circuit_locality,
         circuit_country,
 
-        position,
-        car_number,
+        cast(position as integer) as position,
+        cast(car_number as integer) as car_number,
 
         driver_id,
         driver_permanent_number,
@@ -49,7 +35,55 @@ final as (
 
         load_season,
         load_date
-    from base
+    from {{ ref('stg_qualifying') }}
+),
+
+dim_races as (
+    select
+        race_key,
+        cast(season as integer) as season,
+        cast(round as integer) as round
+    from {{ ref('dim_races') }}
 )
 
-select * from final;
+select
+    r.race_key,
+
+    b.qualifying_id,
+    b.season,
+    b.round,
+
+    b.race_name,
+    b.race_date,
+
+    b.circuit_id,
+    b.circuit_name,
+    b.circuit_locality,
+    b.circuit_country,
+
+    b.position,
+    b.car_number,
+
+    b.driver_id,
+    b.driver_permanent_number,
+    b.driver_code,
+    b.driver_given_name,
+    b.driver_family_name,
+    b.driver_nationality,
+    b.driver_date_of_birth,
+
+    b.constructor_id,
+    b.constructor_name,
+    b.constructor_nationality,
+
+    b.q1,
+    b.q2,
+    b.q3,
+
+    b.load_season,
+    b.load_date
+from base b
+left join dim_races r
+    on b.season = r.season
+   and b.round = r.round
+;
