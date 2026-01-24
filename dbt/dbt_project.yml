@@ -17,4 +17,10 @@ clean-targets:
 
 models:
   formula_one_aws_analytics:
-    +materialized: view
+    staging:
+      +schema: dbt_staging
+      +materialized: view
+
+    marts:
+      +schema: dbt_marts
+      +materialized: table

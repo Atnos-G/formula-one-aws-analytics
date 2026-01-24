@@ -1,0 +1,81 @@
+version: 2
+
+models:
+  - name: dim_drivers
+    description: "Dimension pilotes (1 ligne par driver_id)."
+    columns:
+      - name: driver_id
+        description: "Identifiant pilote."
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_constructors
+    description: "Dimension écuries (1 ligne par constructor_id)."
+    columns:
+      - name: constructor_id
+        description: "Identifiant écurie."
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_races
+    description: "Dimension courses (1 ligne par (season, round)). race_key = clé stable dérivée de season+round."
+    columns:
+      - name: race_key
+        description: "Clé surrogate stable pour une course (season+round)."
+        tests:
+          - not_null
+          - unique
+
+      - name: season
+        description: "Saison (année)."
+        tests:
+          - not_null
+
+      - name: round
+        description: "Numéro de manche dans la saison."
+        tests:
+          - not_null
+
+  - name: fct_results
+    description: "Faits résultats (grain: 1 ligne par (season, round, driver_id))."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - season
+            - round
+            - driver_id
+
+    columns:
+      - name: race_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_races')
+                field: race_key
+
+      - name: driver_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_drivers')
+                field: driver_id
+
+      - name: constructor_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_constructors')
+                field: constructor_id
+
+      - name: season
+        tests:
+          - not_null
+
+      - name: round
+        tests:
+          - not_null
