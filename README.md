@@ -2,7 +2,7 @@
 Cloud-native analytics platform on AWS to ingest and analyze Formula 1 data from the Ergast API.
 
 ## Target architecture
-Ergast API -> Lambda (ingestion) -> S3 (raw) -> dbt/Glue (transform) -> Athena/Redshift Serverless -> BI
+https://api.jolpi.ca/ergast/ -> Lambda (ingestion) -> S3 (raw) -> dbt/Glue (transform) -> Athena/Redshift Serverless -> BI
 
 ## Data model (planned)
 Staging: stg_drivers, stg_races, stg_results, stg_constructors
