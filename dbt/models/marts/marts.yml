@@ -79,3 +79,104 @@ models:
       - name: round
         tests:
           - not_null
+
+  - name: fct_qualifying
+    description: "Faits qualifying (grain: 1 ligne par (season, round, driver_id))."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - season
+              - round
+              - driver_id
+
+    columns:
+      - name: qualifying_id
+        description: "Identifiant technique (ex: season-round-driver_id)."
+        tests:
+          - not_null
+          - unique
+
+      - name: race_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_races')
+                field: race_key
+
+      - name: driver_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_drivers')
+                field: driver_id
+
+      - name: constructor_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_constructors')
+                field: constructor_id
+
+      - name: season
+        tests:
+          - not_null
+
+      - name: round
+        tests:
+          - not_null
+
+      - name: position
+        description: "Position en qualif (1..20)."
+
+      - name: q1
+        description: "Temps Q1 (format brut API)."
+
+      - name: q2
+        description: "Temps Q2 (format brut API)."
+
+      - name: q3
+        description: "Temps Q3 (format brut API)."
+
+  - name: ana_qualifying_pole
+    description: "Analyse : poleman par course (grain: 1 ligne par (season, round))."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+        arguments:
+          combination_of_columns:
+            - season
+            - round
+
+    columns:
+      - name: race_key
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_races')
+                field: race_key
+
+      - name: season
+        tests:
+          - not_null
+
+      - name: round
+        tests:
+          - not_null
+
+      - name: pole_driver_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_drivers')
+                field: driver_id
+
+      - name: pole_constructor_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_constructors')
+                field: constructor_id

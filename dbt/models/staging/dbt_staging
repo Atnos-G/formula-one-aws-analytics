@@ -40,3 +40,17 @@ models:
         tests: [not_null]
       - name: constructor_id
         tests: [not_null]
+
+  - name: stg_qualifying
+    description: "Qualifying flattené depuis raw_qualifying_json (1 ligne = 1 driver x 1 race)"
+    columns:
+      - name: season
+        tests: [not_null]
+      - name: round
+        tests: [not_null]
+      - name: driver_id
+        tests: [not_null]
+      - name: constructor_id
+        tests: [not_null]
+      - name: position
+        tests: [not_null]
