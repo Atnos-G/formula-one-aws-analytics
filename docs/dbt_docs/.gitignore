@@ -1,0 +1,10 @@
+# Keep only the minimum required artifacts for browsing dbt docs
+
+compiled/
+run/
+
+graph.gpickle
+graph_summary.json
+partial_parse.msgpack
+perf_info.json
+semantic_manifest.json
