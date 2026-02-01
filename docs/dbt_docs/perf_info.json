@@ -1,0 +1,57 @@
+{
+    "path_count": 206,
+    "parsed_path_count": 206,
+    "static_analysis_path_count": 11,
+    "static_analysis_parsed_path_count": 9,
+    "is_partial_parse_enabled": false,
+    "is_static_analysis_enabled": true,
+    "read_files_elapsed": 0.03416719997767359,
+    "load_macros_elapsed": 0.4781315000145696,
+    "parse_project_elapsed": 0.3713867999613285,
+    "patch_sources_elapsed": 0.021725600003264844,
+    "process_manifest_elapsed": 0.019014100020285696,
+    "load_all_elapsed": 0.9667655000230297,
+    "projects": [
+        {
+            "project_name": "formula_one_aws_analytics",
+            "elapsed": 0.36456790001830086,
+            "parsers": [
+                {
+                    "parser": "model",
+                    "elapsed": 0.18233560002408922,
+                    "parsed_path_count": 11
+                },
+                {
+                    "parser": "test",
+                    "elapsed": 0.17900699999881908,
+                    "parsed_path_count": 2
+                }
+            ],
+            "parsed_path_count": 13
+        },
+        {
+            "project_name": "dbt_athena",
+            "elapsed": 0.0022138000349514186,
+            "parsers": [],
+            "parsed_path_count": 0
+        },
+        {
+            "project_name": "dbt",
+            "elapsed": 0.002307400049176067,
+            "parsers": [
+                {
+                    "parser": "doc",
+                    "elapsed": 0.00011160003487020731,
+                    "parsed_path_count": 1
+                }
+            ],
+            "parsed_path_count": 1
+        },
+        {
+            "project_name": "dbt_utils",
+            "elapsed": 0.0022060000337660313,
+            "parsers": [],
+            "parsed_path_count": 0
+        }
+    ]
+}
